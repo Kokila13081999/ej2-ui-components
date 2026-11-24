@@ -207,6 +207,7 @@ const resourceFields = {
           taskType="FixedWork"
           resourceFields={resourceFields}
           resources={resources}
+		  baselineColor='Goldenrod'
         >
           <ColumnsDirective>
             <ColumnDirective field="TaskID" headerText="ID" width={60} />
