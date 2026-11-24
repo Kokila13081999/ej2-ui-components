@@ -1,0 +1,17 @@
+{
+  "name": "scm-syncfusion-react-poc",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SCM POC: React + Syncfusion (Grid custom binding with 1L records, Pivot, Chart, Gantt, Schedule, Diagram) with JWT login",
+  "scripts": {
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "server": "npm --prefix server start",
+    "client": "npm --prefix client run dev",
+    "dev": "concurrently -n api,web -c blue,magenta \"npm:server\" \"npm:client\"",
+    "build": "npm --prefix client run build",
+    "preview": "concurrently -n api,web -c blue,magenta \"npm:server\" \"npm --prefix client run preview\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
