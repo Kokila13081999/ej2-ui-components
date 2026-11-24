@@ -46,6 +46,20 @@ function MapsSample() {
     return { color: isSelected ? color : '#cbd5e1', dimmed: !isSelected, disrupted };
   };
 
+  // Trans-Pacific lanes are cut at the date line: label both cut ends so the real origin/destination is clear.
+  const edgeLabels = visibleLanes.flatMap((l) => {
+    const src = siteById[l.sourceId];
+    const tgt = siteById[l.targetId];
+    const segs = laneSegments(src, tgt);
+    if (segs.length < 2) return [];
+    const [a, b] = segs;
+    const eastward = a.longitude[1] > 0;
+    return [
+      { latitude: a.latitude[1], longitude: a.longitude[1], text: `${eastward ? '' : '◄ '}to ${tgt.name}${eastward ? ' ►' : ''}` },
+      { latitude: b.latitude[0], longitude: b.longitude[0], text: `${eastward ? '◄ ' : ''}from ${src.name}${eastward ? '' : ' ►'}` },
+    ];
+  });
+
   const selectedSite = selected ? siteById[selected] : null;
   const inbound = selected ? lanes.filter((l) => l.targetId === selected) : [];
   const outbound = selected ? lanes.filter((l) => l.sourceId === selected) : [];
@@ -142,6 +156,12 @@ function MapsSample() {
                     dataSource={sites.filter((s) => s.tier !== 'Channel')}
                     template={'<div class="site-label">${name}</div>'}
                     offset={{ x: 0, y: -14 }}
+                    animationDuration={0}
+                  />
+                  <MarkerDirective
+                    visible
+                    dataSource={edgeLabels}
+                    template={'<div class="site-label edge-label">${text}</div>'}
                     animationDuration={0}
                   />
                   <MarkerDirective
