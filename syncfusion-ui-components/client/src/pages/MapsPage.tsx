@@ -105,7 +105,7 @@ function MapsSample() {
                 <NavigationLinesDirective>
                   {visibleLanes.flatMap((l) => {
                     const style = laneStyle(l.sourceId, l.targetId);
-                    const width = style.dimmed ? 1 : 1 + (l.value / maxVolume) * 5;
+                    const width = style.dimmed ? 1 : 1 + (l.value / maxVolume) * 3;
                     return laneSegments(siteById[l.sourceId], siteById[l.targetId]).map((seg, j, all) => (
                       <NavigationLineDirective
                         key={`${l.sourceId}-${l.targetId}-${j}`}
@@ -117,7 +117,7 @@ function MapsSample() {
                         color={style.color}
                         dashArray={style.disrupted ? '3,3' : ''}
                         // SVG arrow markers scale with stroke width, so keep the arrow head ~8px regardless of lane thickness.
-                        arrowSettings={{ showArrow: !style.dimmed && j === all.length - 1, position: 'End', size: Math.max(1.2, 8 / width), color: style.color }}
+                        arrowSettings={{ showArrow: !style.dimmed && j === all.length - 1, position: 'End', size: Math.max(3, 14 / width), color: style.color }}
                       />
                     ));
                   })}
@@ -137,6 +137,13 @@ function MapsSample() {
                       tooltipSettings={{ visible: true, valuePath: 'name', format: '<b>${name}</b><br/>${tier} · ${country}' }}
                     />
                   ))}
+                  <MarkerDirective
+                    visible
+                    dataSource={sites.filter((s) => s.tier !== 'Channel')}
+                    template={'<div class="site-label">${name}</div>'}
+                    offset={{ x: 0, y: -14 }}
+                    animationDuration={0}
+                  />
                   <MarkerDirective
                     visible={disruption}
                     dataSource={[siteById[DISRUPTED_SITE]]}

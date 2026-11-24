@@ -74,3 +74,8 @@
 @media (prefers-reduced-motion: reduce) {
   .flow-animated path[id*='_NavigationIndex_'], .pulse { animation: none; }
 }
+
+.site-label {
+  font-size: 10px; font-weight: 600; color: #1f2937; white-space: nowrap;
+  background: rgba(255,255,255,.85); padding: 0 3px; border-radius: 3px; pointer-events: none;
+}
